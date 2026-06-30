@@ -1,2 +1,46 @@
-<h1>Kittens#index</h1>
-<p>Find me in app/views/kittens/index.html.erb</p>
+<h1>All Kittens</h1>
+
+<!-- 1. The Counter Display -->
+<div class="kitten-counter">
+  📊 Total Feline Overlords: <strong><%= @kitten_count %></strong>
+</div>
+
+<%= link_to '➕ Add New Kitten', new_kitten_path, class: 'btn-new' %>
+
+<!-- 2. Conditional Empty State vs. Table Display -->
+<% if @kittens.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Cuteness</th>
+        <th>Softness</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @kittens.each do | k | %>
+        <tr>
+          <td><strong><%= k.name %></strong></td>
+          <td><%= k.age %></td>
+          <td><%= k.cuteness %></td>
+          <td><%= k.softness %></td>
+          <td>
+            <%= link_to '👁️ View', kitten_path(k) %> |
+            <%= link_to '✏️ Edit', edit_kitten_path(k) %> |
+            <%= link_to '🗑️ Delete', kitten_path(k),
+                        data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete the cuteness?'} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <!-- The sarcastic empty state placeholder -->
+  <div class="empty-state">
+    💨 <h3>No kittens found. Go look outside!</h3>
+    <p> Your database is as empty as a food bowl at 8:01 PM. Fix this immediately. -Meooooooww!</p>
+  </div>
+<% end %>
+
+

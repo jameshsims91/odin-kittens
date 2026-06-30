@@ -1,0 +1,38 @@
+<%= form_with model: kitten do | f | %>
+  <% if kitten.errors.any? %>
+    <div style="color: red;">
+      <h2><%= pluralize(kitten.errors.count, "error") %> stopped this from saving:</h2>
+      <ul>
+        <% kitten.errors.full_messages.each do | msg | %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="input_field">
+    <%= f.label :name %>
+    <%= f.text_field :name, placeholder: "Mittens", required: true %>
+  </div>
+
+  <div class="input_field">
+    <%= f.label :age %>
+    <%= f.select :age, (1..30), { prompt: "Select age..."}, required: true %>
+  </div>
+
+  <div class="input_field">
+    <%= f.label :cuteness %>
+    <span>10(most cutest kitty), 1(fugly, eww)</span>
+    <%= f.select :cuteness, (1..10), { prompt: "Choose wisely" }, required: true %>
+  </div>
+
+  <div class="input_field">
+    <%= f.label :softness %>
+    <span>10(soft like clouds), 1(razorblades)</span>
+    <%= f.select :softness, (1..10), { prompt: "Choose wisely" }, required: true %>
+  </div>
+
+  <div class="action">
+    <%= f.submit "Create Kitten" %>
+  </div>
+<% end %>
