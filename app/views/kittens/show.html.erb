@@ -7,7 +7,5 @@
 <%= link_to '✏️ Edit details', edit_kitten_path(@kitten) %>
 <%= link_to '📋 Back to all kittens', kittens_path %>
 <%= button_to '🗑️ Delete kitten', kitten_path(@kitten),
-              data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete the cuteness?' } %>
-
-
-
+              method: :delete,
+              data: { tturbo_confirm: 'Are you sure you want to delete the cuteness?' } %>

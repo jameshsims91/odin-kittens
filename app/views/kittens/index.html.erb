@@ -29,7 +29,8 @@
             <%= link_to '👁️ View', kitten_path(k) %> |
             <%= link_to '✏️ Edit', edit_kitten_path(k) %> |
             <%= link_to '🗑️ Delete', kitten_path(k),
-                        data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete the cuteness?'} %>
+                        method: :delete,
+                        data: { turbo_confirm: 'Are you sure you want to delete the cuteness?'} %>
           </td>
         </tr>
       <% end %>
@@ -42,5 +43,3 @@
     <p> Your database is as empty as a food bowl at 8:01 PM. Fix this immediately. -Meooooooww!</p>
   </div>
 <% end %>
-
-
