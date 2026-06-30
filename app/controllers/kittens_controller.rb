@@ -1,16 +1,11 @@
 class KittensController < ApplicationController
+  before_action :set_kitten, only: [ :show, :edit, :update, :destroy ]
   def index
     @kittens = Kitten.all
     @kitten_count = @kittens.count
-    respond_to do | format |
-      format.html
-      format.json { render json: @kittens }
-    end
   end
 
   def show
-    @kitten = Kitten.find(params[:id])
-
     respond_to do | format |
       format.html
       format.json { render json: @kitten }
@@ -33,12 +28,9 @@ class KittensController < ApplicationController
   end
 
   def edit
-    @kitten = Kitten.find(params[:id])
   end
 
   def update
-    @kitten.update(params[:id])
-
     if @kitten.update(kitten_params)
       redirect_to @kitten, notice: "Kitten was successfully updated."
     else
@@ -47,13 +39,20 @@ class KittensController < ApplicationController
   end
 
   def destroy
-    @kitten = Kitten.find(params[:id])
     @kitten.destroy
-
     redirect_to kittens_path, notice: "Kitten was successfully destroyed.", status: :see_other
   end
 
   private
+
+  def set_kitten
+    @kitten = Kitten.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do | format |
+      format.html { redirect_to kittens_path, alert: "🤡 That kitten doesn't exist, human." }
+      format.json { render json: { error: "Kitten record not found" }, status: :not_found }
+    end
+  end
 
   def kitten_params
     params.expect(kitten: [ :age, :cuteness, :name, :softness ])
