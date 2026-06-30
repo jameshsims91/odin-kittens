@@ -28,13 +28,14 @@
     <div id="flash-message">
       <% flash.each do | type, msg | %>
         <div class="flash flash-<%= type %>">
-          <% if msg.include?('created') %>
+          <% message_text = msg.to_s %>
+          <% if message_text.include?('created') %>
             🎉 **Success!** Look at you go, adding to the feline population. <%= msg %>
-          <% elsif  msg.include?('updated') %>
+          <% elsif  message_text.include?('updated') %>
             ✨ **Wow!** You actually managed to fix it. <%= msg %>
-          <% elsif msg.include?('deleted') %>
+          <% elsif message_text.include?('deleted') %>
             🗑️ **Gone forever!** Cold-blooded, but okay. <%= msg %>
-          <% elsif type == "alert" || msg.include?('prohibited') || msg.include?('stopped') %>
+          <% elsif type.to_s == "alert" || message_text.include?('prohibited') || message_text.include?('stopped') %>
             🤡 **Nice try, human.** You completely messed up the form. Read the errors below!
           <% else %>
             <%= msg %>
